@@ -31,9 +31,10 @@ def fourier(t,n,rep=2000,filtro=None):
                 coeficiente_vetor.append(abs(coeficiente))
                 contador += 1
             else:
+                contador +=1
                 coeficiente_vetor.append(0)
 
-            vetor_w.append(k*np.pi/2)#Cria o vetor Kw0:
+            vetor_w.append(k*np.pi/2)#Cria o vetor w:
 
         y.append(soma)
         energia_erro += (soma - x[g]/2)**2
@@ -46,17 +47,19 @@ vetor_energia = []#Salva a energia do erro
 for k in range(4):
     fourier(2,vetor_n[k])
     plt.title("Dente de Serra e Aproximação por Fourier: N = {}".format(vetor_n[k]))
-    plt.plot(x, y, "b")
-    plt.plot(x,x/2, "r")
+    plt.plot(x, y, "b", label="Fourier")
+    plt.plot(x,x/2, "r", label="Dente de serra")
     plt.legend()
+    plt.xlabel("t[s]")
+    plt.ylabel("x(t)")
     plt.show()
     vetor_energia.append(float(energia_erro))
-
-print(vetor_energia)
 
 #Plot dos coeficientes para N = 50
 fourier(2,50)
 plt.title("Plot dos coeficientes em função de Kw0")
+plt.xlabel("k*w0")
+plt.ylabel("Ck")
 plt.stem(vetor_w,coeficiente_vetor, use_line_collection=True)
 plt.show()
 
@@ -77,17 +80,25 @@ for k in range(len(vetor_w)):
         h_fase.append(0)
         H.append(0)
 
+print(H)
+
 #Plotando módulo e fase de H:
 plt.title("Módulo de H em função de w")
+plt.xlabel("K*w0")
+plt.ylabel("Abs(H)")
 plt.stem(vetor_w, h_abs, use_line_collection=True)
 plt.show()
 
 plt.title("Fase de H em função de w")
+plt.xlabel("K*w0")
+plt.ylabel("Angle(H)")
 plt.stem(vetor_w, h_fase, use_line_collection=True)
 plt.show()
 
 #Plotando a série de Fourier após o filtro:
-fourier(2,50,filtro=H)
+fourier(2,50,10000,filtro=H)
 plt.title("Série de Fourier após filtro")
+plt.xlabel("t[s]")
+plt.ylabel("x(t)")
 plt.plot(x,y)
 plt.show()

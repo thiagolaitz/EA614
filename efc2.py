@@ -38,7 +38,7 @@ def fourier(t,n,rep=2000,filtro=None):
 
         y.append(soma)
         energia_erro += (soma - x[g]/2)**2
-    energia_erro = energia_erro/(2*t)
+    energia_erro = energia_erro/(rep)
     filtro = []
 
 vetor_n = [1,10,20,50]#Possíveis valores de N
@@ -54,6 +54,8 @@ for k in range(4):
     plt.ylabel("x(t)")
     plt.show()
     vetor_energia.append(float(energia_erro))
+
+print(vetor_energia)
 
 #Plot dos coeficientes para N = 50
 fourier(2,50)
@@ -80,8 +82,6 @@ for k in range(len(vetor_w)):
         h_fase.append(0)
         H.append(0)
 
-print(H)
-
 #Plotando módulo e fase de H:
 plt.title("Módulo de H em função de w")
 plt.xlabel("K*w0")
@@ -96,7 +96,7 @@ plt.stem(vetor_w, h_fase, use_line_collection=True)
 plt.show()
 
 #Plotando a série de Fourier após o filtro:
-fourier(2,50,10000,filtro=H)
+fourier(2,50,2000,filtro=H)
 plt.title("Série de Fourier após filtro")
 plt.xlabel("t[s]")
 plt.ylabel("x(t)")

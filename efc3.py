@@ -97,3 +97,17 @@ plt.title("Módulo do filtro de Butterworth")
 plt.plot(w,mod_Butterworth(n=2,wc=5,w=w))
 plt.show()
 
+#Graf8
+plt.title("Comparação do Módulo dos filtros")
+plt.plot(w,mod_Butterworth(n=2,wc=5,w=w), color="b")
+plt.plot(w,mod_Chebyshev(e=0.9,n=3,wc=5,w=w), color="r")
+plt.plot(w,filtro_ideal, color="g")
+plt.legend(("Butterworth","Chebyshev","Ideal"))
+plt.show()
+
+plt.title("Saída após filtragem")
+plt.plot(w,filtro(mod_Butterworth(n=2,wc=5,w=w),y), color="b")
+plt.plot(w,filtro(mod_Chebyshev(e=0.9,n=3,wc=5,w=w),y), color="r")
+plt.plot(w,filtro(filtro_ideal,y), color="g")
+plt.legend(("Butterworth","Chebyshev","Ideal"))
+plt.show()
